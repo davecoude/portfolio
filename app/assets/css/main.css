@@ -1,1 +1,74 @@
 @import "tailwindcss";
+
+/* El modo oscuro lo activa la clase .dark */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Tokens semánticos: una sola fuente de verdad por tema */
+:root {
+  --page: #F7F8F9;
+  --tray: #EEF0F2;
+  --surface: #FFFFFF;
+  --line: #E2E5E9;
+  --ink: #15171A;
+  --ink-2: #5B6068;       /* texto secundario (contraste AA) */
+  --ink-3: #A2A7AE;       /* solo decorativo */
+  --btn: #15171A;
+  --on-btn: #FFFFFF;
+  --ok: #1D7443;          /* único color: disponibilidad / activo ahora */
+  --ok-bg: #E1F2E7;
+  --on-ok: #FFFFFF;
+  --shadow: rgb(21 23 26 / 0.28);
+  --shadow-soft: rgb(21 23 26 / 0.06);
+  color-scheme: light;
+}
+
+.dark {
+  --page: #0E0F11;
+  --tray: #16181B;
+  --surface: #1D2024;
+  --line: #2A2E33;
+  --ink: #ECEEF1;
+  --ink-2: #A4A9B1;
+  --ink-3: #5C6169;
+  --btn: #ECEEF1;
+  --on-btn: #15171A;
+  --ok: #62D394;
+  --ok-bg: #12301F;
+  --on-ok: #0E0F11;
+  --shadow: rgb(0 0 0 / 0.6);
+  --shadow-soft: rgb(0 0 0 / 0.3);
+  color-scheme: dark;
+}
+
+/* inline: las utilidades apuntan a la variable, así cambian solas con el tema */
+@theme inline {
+  --color-page: var(--page);
+  --color-tray: var(--tray);
+  --color-surface: var(--surface);
+  --color-line: var(--line);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-btn: var(--btn);
+  --color-on-btn: var(--on-btn);
+  --color-ok: var(--ok);
+  --color-ok-bg: var(--ok-bg);
+  --color-on-ok: var(--on-ok);
+  --shadow-cta: inset 0 1px 0 rgb(255 255 255 / 0.14), 0 8px 18px -8px var(--shadow);
+  --shadow-soft: 0 1px 2px var(--shadow-soft);
+}
+
+@theme {
+  --font-sans: "Instrument Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  /* radios por jerarquía: bandeja > superficie > control */
+  --radius-tray: 28px;
+  --radius-surface: 18px;
+  --radius-ctl: 12px;
+}
+
+@layer base {
+  body {
+    @apply bg-page text-ink font-sans antialiased;
+  }
+}

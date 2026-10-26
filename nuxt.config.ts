@@ -8,5 +8,17 @@ export default defineNuxtConfig({
   css: ['~/assets/css/main.css'],
   vite: {
     plugins: [tailwindcss()]
-  }
+  },
+  fonts: {
+    families: [
+      { name: 'Instrument Sans', provider: 'google', weights: [400, 500, 600] },
+      { name: 'Geist Mono', provider: 'google', weights: [400, 500] },
+    ],
+  },
+  icon: {
+    serverBundle: {
+      collections: ['lucide', 'simple-icons'],
+    },
+  },
+  
 })
