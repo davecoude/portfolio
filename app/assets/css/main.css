@@ -17,8 +17,8 @@
   --ok: #1D7443;          /* único color: disponibilidad / activo ahora */
   --ok-bg: #E1F2E7;
   --on-ok: #FFFFFF;
-  --shadow: rgb(21 23 26 / 0.28);
-  --shadow-soft: rgb(21 23 26 / 0.06);
+  --shade: rgb(21 23 26 / 0.28);
+  --shade-soft: rgb(21 23 26 / 0.06);
   color-scheme: light;
 }
 
@@ -35,8 +35,8 @@
   --ok: #62D394;
   --ok-bg: #12301F;
   --on-ok: #0E0F11;
-  --shadow: rgb(0 0 0 / 0.6);
-  --shadow-soft: rgb(0 0 0 / 0.3);
+  --shade: rgb(0 0 0 / 0.6);
+  --shade-soft: rgb(0 0 0 / 0.3);
   color-scheme: dark;
 }
 
@@ -54,8 +54,8 @@
   --color-ok: var(--ok);
   --color-ok-bg: var(--ok-bg);
   --color-on-ok: var(--on-ok);
-  --shadow-cta: inset 0 1px 0 rgb(255 255 255 / 0.14), 0 8px 18px -8px var(--shadow);
-  --shadow-soft: 0 1px 2px var(--shadow-soft);
+  --shadow-cta: inset 0 1px 0 rgb(255 255 255 / 0.14), 0 8px 18px -8px var(--shade);
+  --shadow-soft: 0 1px 2px var(--shade-soft);
 }
 
 @theme {
