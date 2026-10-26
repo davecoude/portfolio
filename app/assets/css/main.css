@@ -65,6 +65,7 @@
   --radius-tray: 28px;
   --radius-surface: 18px;
   --radius-ctl: 12px;
+  --breakpoint-nav: 50rem;
 }
 
 @layer base {

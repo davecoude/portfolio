@@ -9,11 +9,11 @@ const links = [
 
 <template>
   <header
-    class="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-x-4 gap-y-2.5 rounded-[20px] bg-tray p-2.5 [grid-template-areas:'clock_icons'_'nav_nav'] md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] md:pl-5 md:[grid-template-areas:'clock_nav_icons']"
+    class="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-x-4 gap-y-2.5 rounded-[20px] bg-tray p-2.5 [grid-template-areas:'clock_icons'_'nav_nav'] nav:grid-cols-[1fr_auto_1fr] nav:pl-5 nav:[grid-template-areas:'clock_nav_icons']"
   >
-    <LocalClock class="pl-2 [grid-area:clock] md:pl-0" />
+    <LocalClock class="pl-2 [grid-area:clock] nav:pl-0" />
 
-    <nav aria-label="Main" class="flex justify-between gap-1 text-base font-medium [grid-area:nav] md:justify-center">
+    <nav aria-label="Main" class="flex justify-between gap-1 text-base font-medium [grid-area:nav] nav:justify-center">
       <a
         v-for="link in links"
         :key="link.href"
