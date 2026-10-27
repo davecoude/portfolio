@@ -1,9 +1,13 @@
-import type { Activity, Project, ProjectSource } from './project'
+import { parseManifest, type Manifest } from './manifest'
+import type { Activity, Locale, Project, ProjectDetail, ProjectSource } from './project'
 
 const API_URL = 'https://api.github.com'
+const RAW_URL = 'https://raw.githubusercontent.com'
 const PORTFOLIO_TOPIC = 'portfolio'
 const FEATURED_TOPIC = 'featured'
+const MANIFEST_FILE = 'meta.json'
 const JSON_MEDIA_TYPE = 'application/vnd.github+json'
+const RAW_MEDIA_TYPE = 'application/vnd.github.raw+json'
 
 /** Solo los campos de la API de GitHub que usamos */
 interface GitHubRepo {
@@ -15,6 +19,11 @@ interface GitHubRepo {
   topics?: string[]
   pushed_at: string
   default_branch: string
+}
+
+interface GitHubContentEntry {
+  name: string
+  type: string
 }
 
 export class GitHubApiError extends Error {
@@ -33,10 +42,11 @@ export interface GitHubProjectSourceOptions {
   token?: string
   /** Inyectable para los tests */
   fetch?: typeof globalThis.fetch
+  logger?: Pick<Console, 'warn'>
 }
 
 export function createGitHubProjectSource(options: GitHubProjectSourceOptions): ProjectSource {
-  const { owner, token, fetch = globalThis.fetch } = options
+  const { owner, token, fetch = globalThis.fetch, logger = console } = options
 
   /** 404 → null (el recurso no existe). Cualquier otro error lanza, para que ISR siga sirviendo la versión anterior */
   async function request(path: string, accept = JSON_MEDIA_TYPE): Promise<Response | null> {
@@ -54,6 +64,10 @@ export function createGitHubProjectSource(options: GitHubProjectSourceOptions): 
     return response
   }
 
+  function portfolioPath(repo: GitHubRepo, file?: string): string {
+    return `/repos/${repo.full_name}/contents/.portfolio${file ? `/${file}` : ''}`
+  }
+
   async function listPortfolioRepos(): Promise<GitHubRepo[]> {
     const path = `/users/${owner}/repos?type=owner&sort=pushed&per_page=100`
     const response = await request(path)
@@ -62,35 +76,94 @@ export function createGitHubProjectSource(options: GitHubProjectSourceOptions): 
     return repos.filter(repo => repo.topics?.includes(PORTFOLIO_TOPIC))
   }
 
-  /** Por ahora todo proyecto usa los datos del repo; el manifiesto llega en el paso 4 */
-  function toProject(repo: GitHubRepo): Project {
-    return {
+  /** Nombres de archivo dentro de .portfolio/ (vacío si la carpeta no existe) */
+  async function listPortfolioFiles(repo: GitHubRepo): Promise<Set<string>> {
+    const response = await request(portfolioPath(repo))
+    if (!response) return new Set()
+    const entries = (await response.json()) as GitHubContentEntry[]
+    return new Set(entries.filter(entry => entry.type === 'file').map(entry => entry.name))
+  }
+
+  async function readFile(repo: GitHubRepo, file: string): Promise<string | null> {
+    const response = await request(portfolioPath(repo, file), RAW_MEDIA_TYPE)
+    return response ? response.text() : null
+  }
+
+  async function readManifest(repo: GitHubRepo, files: Set<string>): Promise<Manifest | null> {
+    if (!files.has(MANIFEST_FILE)) return null
+    const raw = await readFile(repo, MANIFEST_FILE)
+    if (raw === null) return null
+
+    const result = parseManifest(raw)
+    if (!result.success) {
+      logger.warn(`[project-source] Manifiesto inválido en ${repo.full_name}; se usa el fallback.\n${result.error}`)
+      return null
+    }
+    return result.manifest
+  }
+
+  function rawFileUrl(repo: GitHubRepo, path: string): string {
+    const relativePath = path.replace(/^\.?\//, '')
+    return `${RAW_URL}/${repo.full_name}/${repo.default_branch}/${relativePath}`
+  }
+
+  async function loadProject(repo: GitHubRepo, locale: Locale): Promise<Project> {
+    const files = await listPortfolioFiles(repo)
+    const manifest = await readManifest(repo, files)
+
+    const base = {
       slug: repo.name.toLowerCase(),
-      title: repo.name,
-      summary: repo.description ?? '',
-      role: null,
-      stack: [],
-      highlights: [],
-      productLanguage: null,
       featured: repo.topics?.includes(FEATURED_TOPIC) ?? false,
       links: { demo: repo.homepage || null, code: repo.html_url },
-      cover: null,
-      hasCaseStudy: false,
+      hasCaseStudy: files.has(caseStudyFile(locale)),
       pushedAt: repo.pushed_at,
+    }
+
+    if (!manifest) {
+      return {
+        ...base,
+        title: repo.name,
+        summary: repo.description ?? '',
+        role: null,
+        stack: [],
+        highlights: [],
+        productLanguage: null,
+        cover: null,
+      }
+    }
+
+    return {
+      ...base,
+      title: manifest.title,
+      summary: manifest.summary[locale],
+      role: manifest.role[locale],
+      stack: manifest.stack,
+      highlights: manifest.highlights?.[locale] ?? [],
+      productLanguage: manifest.productLanguage,
+      cover: rawFileUrl(repo, manifest.cover),
     }
   }
 
   return {
-    async listProjects() {
+    async listProjects(locale) {
       const repos = await listPortfolioRepos()
+      const projects = await Promise.all(repos.map(repo => loadProject(repo, locale)))
       // Destacados primero; luego el push más reciente
-      return repos
-        .map(toProject)
-        .sort((a, b) => Number(b.featured) - Number(a.featured) || b.pushedAt.localeCompare(a.pushedAt))
+      return projects.sort((a, b) =>
+        Number(b.featured) - Number(a.featured) || b.pushedAt.localeCompare(a.pushedAt),
+      )
     },
 
-    async getProject() {
-      throw new Error('getProject se implementa en el paso 4')
+    async getProject(slug, locale): Promise<ProjectDetail | null> {
+      const repos = await listPortfolioRepos()
+      const repo = repos.find(candidate => candidate.name.toLowerCase() === slug.toLowerCase())
+      if (!repo) return null
+
+      const project = await loadProject(repo, locale)
+      if (!project.hasCaseStudy) return null
+
+      const caseStudy = await readFile(repo, caseStudyFile(locale))
+      return caseStudy === null ? null : { ...project, caseStudy }
     },
 
     async getLatestActivity(): Promise<Activity | null> {
@@ -104,4 +177,8 @@ export function createGitHubProjectSource(options: GitHubProjectSourceOptions): 
         : null
     },
   }
+}
+
+function caseStudyFile(locale: Locale): string {
+  return `case-study.${locale}.md`
 }

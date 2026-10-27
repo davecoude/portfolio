@@ -26,8 +26,20 @@ function repo(overrides: Partial<typeof seatmeRepo> = {}) {
   return { ...seatmeRepo, ...overrides }
 }
 
-function source(routes: Record<string, FakeBody>) {
-  return createGitHubProjectSource({ owner: 'davecoude', fetch: fakeGitHub(routes) })
+const validManifest = {
+  title: 'SeatMe',
+  summary: { es: 'Reserva de escritorios.', en: 'Desk booking.' },
+  role: { es: 'Full-stack', en: 'Full-stack' },
+  stack: ['Vue 3', 'Express 5', 'PostgreSQL'],
+  productLanguage: 'es',
+  cover: 'docs/cover.png',
+  highlights: { es: ['Roles con JWT'], en: ['JWT roles'] },
+}
+
+const SEATME = '/repos/davecoude/SeatMe/contents/.portfolio'
+
+function source(routes: Record<string, FakeBody>, logger = { warn: vi.fn() }) {
+  return createGitHubProjectSource({ owner: 'davecoude', fetch: fakeGitHub(routes), logger })
 }
 
 describe('listProjects', () => {
@@ -70,11 +82,87 @@ describe('listProjects', () => {
     })
   })
 
+  it('usa el manifiesto en el idioma pedido y resuelve el cover a una URL absoluta', async () => {
+    const routes = {
+      '/users/davecoude/repos': [repo()],
+      [SEATME]: [{ name: 'meta.json', type: 'file' }],
+      [`${SEATME}/meta.json`]: JSON.stringify(validManifest),
+    }
+
+    const [en] = await source(routes).listProjects('en')
+    const [es] = await source(routes).listProjects('es')
+
+    expect(en).toMatchObject({
+      title: 'SeatMe',
+      summary: 'Desk booking.',
+      highlights: ['JWT roles'],
+      productLanguage: 'es',
+      featured: true,
+      cover: 'https://raw.githubusercontent.com/davecoude/SeatMe/main/docs/cover.png',
+    })
+    expect(es?.summary).toBe('Reserva de escritorios.')
+  })
+
+  it.each([
+    ['no cumple el schema', JSON.stringify({ ...validManifest, productLanguage: 'fr' })],
+    ['no es JSON válido', '{ "title": '],
+    ])('si el manifiesto %s, usa el fallback y lo reporta', async (_case, raw) => {
+    const logger = { warn: vi.fn() }
+    const [project] = await source({
+      '/users/davecoude/repos': [repo()],
+      [SEATME]: [{ name: 'meta.json', type: 'file' }],
+      [`${SEATME}/meta.json`]: raw,
+    }, logger).listProjects('en')
+
+    expect(project?.summary).toBe('Reserva de escritorios en un espacio de trabajo compartido')
+    expect(logger.warn).toHaveBeenCalledWith(expect.stringContaining('davecoude/SeatMe'))
+  })
+
+  it('marca el caso de estudio solo en los idiomas que lo tienen', async () => {
+    const routes = {
+      '/users/davecoude/repos': [repo()],
+      [SEATME]: [{ name: 'case-study.es.md', type: 'file' }],
+    }
+
+    const [en] = await source(routes).listProjects('en')
+    const [es] = await source(routes).listProjects('es')
+
+    expect(en?.hasCaseStudy).toBe(false)
+    expect(es?.hasCaseStudy).toBe(true)
+  })
+
   it('lanza GitHubApiError (502) si GitHub falla, para que ISR conserve la versión anterior', async () => {
     const failing = source({ '/users/davecoude/repos': new Response('boom', { status: 500 }) })
 
     await expect(failing.listProjects('en')).rejects.toBeInstanceOf(GitHubApiError)
     await expect(failing.listProjects('en')).rejects.toMatchObject({ statusCode: 502, upstreamStatus: 500 })
+  })
+})
+
+describe('getProject', () => {
+  const routes = {
+    '/users/davecoude/repos': [repo()],
+    [SEATME]: [
+      { name: 'meta.json', type: 'file' },
+      { name: 'case-study.es.md', type: 'file' },
+    ],
+    [`${SEATME}/meta.json`]: JSON.stringify(validManifest),
+    [`${SEATME}/case-study.es.md`]: '## Contexto\nReservas de escritorios.',
+  }
+
+  it('devuelve el proyecto con el Markdown del caso de estudio, sin importar mayúsculas en el slug', async () => {
+    const project = await source(routes).getProject('SeatMe', 'es')
+
+    expect(project?.title).toBe('SeatMe')
+    expect(project?.caseStudy).toContain('## Contexto')
+  })
+
+  it('devuelve null si no hay caso de estudio en ese idioma', async () => {
+    expect(await source(routes).getProject('seatme', 'en')).toBeNull()
+  })
+
+  it('devuelve null si el slug no existe', async () => {
+    expect(await source(routes).getProject('no-existe', 'es')).toBeNull()
   })
 })
 
