@@ -1,4 +1,4 @@
-import { isLocale } from "~~/server/project-source/project";
+import { isLocale } from '../../../project-source/project'
 
 // GET /api/en/projects · GET /api/es/projects
 export default defineEventHandler((event) => {
