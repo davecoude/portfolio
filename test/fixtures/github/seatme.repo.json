@@ -1,0 +1,13 @@
+{
+  "name": "SeatMe",
+  "full_name": "davecoude/SeatMe",
+  "description": "Reserva de escritorios en un espacio de trabajo compartido",
+  "homepage": "https://seat-me-three.vercel.app/",
+  "html_url": "https://github.com/davecoude/SeatMe",
+  "topics": ["portfolio", "featured"],
+  "fork": false,
+  "archived": false,
+  "language": "Vue",
+  "pushed_at": "2026-10-25T23:20:08Z",
+  "default_branch": "main"
+}
