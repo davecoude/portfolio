@@ -20,5 +20,11 @@ export default defineNuxtConfig({
       collections: ['lucide', 'simple-icons'],
     },
   },
-  
+  runtimeConfig: {
+    githubToken: '',
+    githubOwner: 'davecoude',
+  },
+  routeRules: {
+    '/api/**': { isr: 3600 },
+  }
 })
