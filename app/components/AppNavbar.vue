@@ -9,6 +9,11 @@ const links = [
 const { locale } = useI18n()
 const switchLocalePath = useSwitchLocalePath()
 const targetLocale = computed(() => (locale.value === 'en' ? 'es' : 'en'))
+const colorMode = useColorMode()
+
+function toggleTheme() {
+  colorMode.preference = colorMode.value === 'dark' ? 'light' : 'dark'
+}
 
 </script>
 
@@ -38,8 +43,13 @@ const targetLocale = computed(() => (locale.value === 'en' ? 'es' : 'en'))
       >
         {{ targetLocale.toUpperCase() }}
       </IconButton>
-      <IconButton label="Switch to dark theme">
-        <Icon name="lucide:moon" class="size-[18px]" />
+      <IconButton :label="$t('nav.switchTheme')" @click="toggleTheme">
+        <!--
+          El servidor no conoce el tema: los íconos se alternan por CSS para evitar un desajuste de hidratación.
+          Van envueltos en <span> porque @nuxt/icon fija display en .iconify fuera de @layer y le gana a hidden.
+        -->
+        <span class="flex dark:hidden"><Icon name="lucide:moon" class="size-[18px]" /></span>
+        <span class="hidden dark:flex"><Icon name="lucide:sun" class="size-[18px]" /></span>
       </IconButton>
       <IconButton label="GitHub" href="https://github.com/davecoude">
         <Icon name="lucide:github" class="size-[18px]" />
