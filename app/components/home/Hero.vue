@@ -39,7 +39,7 @@
         {{ $t('hero.ctaProject') }}
       </AppButton>
       <AppButton :href="cvHref" variant="secondary" download>
-        <Icon name="lucide:download" class="size-[18px]" />
+        <Icon name="lucide:download" class="text-[18px]" />
         {{ $t('hero.ctaCv') }}
       </AppButton>
     </div>
