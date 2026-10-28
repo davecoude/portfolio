@@ -1,0 +1,10 @@
+{
+  "nav": {
+    "label": "Main",
+    "about": "About",
+    "work": "Work",
+    "experience": "Experience",
+    "contact": "Contact",
+    "switchLocale": "Ver en español"
+  }
+}
