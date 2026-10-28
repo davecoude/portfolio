@@ -7,5 +7,14 @@
     "contact": "Contacto",
     "switchLocale": "View in English",
     "switchTheme": "Cambiar tema"
+  },
+  "hero": {
+    "photoAlt": "Foto de Diego Vanegas",
+    "role": "Desarrollador full-stack",
+    "status": "Disponible para tiempo completo",
+    "headline": "Construyo aplicaciones web de punta a punta, desde la base de datos hasta el último botón.",
+    "lede": "Vue en el frontend, Node.js y PostgreSQL detrás. Hoy estoy aprendiendo IA generativa: APIs de LLM y RAG.",
+    "ctaProject": "Ver SeatMe",
+    "ctaCv": "Descargar CV"
   }
 }

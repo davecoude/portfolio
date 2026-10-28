@@ -7,5 +7,14 @@
     "contact": "Contact",
     "switchLocale": "Ver en español",
     "switchTheme": "Switch theme"
+  },
+  "hero": {
+    "photoAlt": "Photo of Diego Vanegas",
+    "role": "Full-stack developer",
+    "status": "Open to full-time roles",
+    "headline": "I build web applications end to end, from the database schema to the last button.",
+    "lede": "Vue on the front, Node.js and PostgreSQL behind it. Right now I'm learning generative AI: LLM APIs and RAG.",
+    "ctaProject": "View SeatMe",
+    "ctaCv": "Download CV"
   }
 }
