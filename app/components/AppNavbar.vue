@@ -1,26 +1,26 @@
 <script setup lang="ts">
 const links = [
-  { label: 'About', href: '#about' },
-  { label: 'Work', href: '#work' },
-  { label: 'Experience', href: '#experience' },
-  { label: 'Contact', href: '#contact' },
+  { key: 'nav.about', href: '#about' },
+  { key: 'nav.work', href: '#work' },
+  { key: 'nav.experience', href: '#experience' },
+  { key: 'nav.contact', href: '#contact' },
 ] as const
 </script>
 
 <template>
   <header
-    class="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-x-4 gap-y-2.5 rounded-[20px] bg-tray p-2.5 [grid-template-areas:'clock_icons'_'nav_nav'] nav:grid-cols-[1fr_auto_1fr] nav:pl-5 nav:[grid-template-areas:'clock_nav_icons']"
+    class="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-x-4 gap-y-2.5 nav:gap-x-3 rounded-[20px] bg-tray p-2.5 [grid-template-areas:'clock_icons'_'nav_nav'] nav:grid-cols-[1fr_auto_1fr] nav:pl-5 nav:[grid-template-areas:'clock_nav_icons']"
   >
-    <LocalClock class="pl-2 [grid-area:clock] nav:pl-0" />
+    <LocalClock class="[grid-area:clock]" />
 
-    <nav aria-label="Main" class="flex justify-between gap-1 text-base font-medium [grid-area:nav] nav:justify-center">
+    <nav :aria-label="$t('nav.label')" class="flex justify-between gap-1 text-[15px] font-medium [grid-area:nav] nav:justify-center">
       <a
         v-for="link in links"
         :key="link.href"
         :href="link.href"
-        class="rounded-ctl px-2.5 py-2 transition-colors hover:text-ink-2"
+        class="whitespace-nowrap rounded-ctl py-2 transition-colors hover:text-ink-2 nav:px-1.5"
       >
-        {{ link.label }}
+        {{ $t(link.key) }}
       </a>
     </nav>
 

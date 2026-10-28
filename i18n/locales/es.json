@@ -1,0 +1,9 @@
+{
+  "nav": {
+    "label": "Principal",
+    "about": "Sobre mí",
+    "work": "Proyectos",
+    "experience": "Experiencia",
+    "contact": "Contacto"
+  }
+}
