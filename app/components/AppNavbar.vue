@@ -5,6 +5,11 @@ const links = [
   { key: 'nav.experience', href: '#experience' },
   { key: 'nav.contact', href: '#contact' },
 ] as const
+
+const { locale } = useI18n()
+const switchLocalePath = useSwitchLocalePath()
+const targetLocale = computed(() => (locale.value === 'en' ? 'es' : 'en'))
+
 </script>
 
 <template>
@@ -25,8 +30,14 @@ const links = [
     </nav>
 
     <div class="flex justify-self-end gap-2 [grid-area:icons]">
-      <!-- lógica en PF-2 (idioma) y PF-3 (tema) -->
-      <IconButton label="Ver en español">ES</IconButton>
+      <IconButton
+        :to="switchLocalePath(targetLocale)"
+        :label="$t('nav.switchLocale')"
+        :lang="targetLocale"
+        :hreflang="targetLocale"
+      >
+        {{ targetLocale.toUpperCase() }}
+      </IconButton>
       <IconButton label="Switch to dark theme">
         <Icon name="lucide:moon" class="size-[18px]" />
       </IconButton>
