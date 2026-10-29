@@ -7,5 +7,55 @@
     "contact": "Contacto",
     "switchLocale": "View in English",
     "switchTheme": "Cambiar tema"
+  },
+  "hero": {
+    "photoAlt": "Foto de Diego Vanegas",
+    "role": "Desarrollador full-stack",
+    "status": "Disponible para tiempo completo",
+    "headline": "Construyo aplicaciones web de punta a punta, desde la base de datos hasta el último botón.",
+    "lede": "Vue en el frontend, Node.js y PostgreSQL detrás. Hoy estoy aprendiendo IA generativa: APIs de LLM y RAG.",
+    "ctaProject": "Ver SeatMe",
+    "ctaCv": "Descargar CV"
+  },
+  "about": {
+    "title": "Sobre mí",
+    "intro": "Hola, soy Diego, desarrollador full-stack en Bogotá.",
+    "introMore": "Estudio ingeniería de software y me gusta el código que sigue siendo fácil de cambiar después del lanzamiento.",
+    "learning": {
+      "label": "Aprendiendo ahora",
+      "title": "IA generativa",
+      "text": "Construyendo con APIs de LLM y generación aumentada por recuperación (RAG)."
+    },
+    "studying": {
+      "label": "Estudiando ahora",
+      "title": "Ingeniería de Software",
+      "text": "Corporación Universitaria Iberoamericana, 2024–2027"
+    },
+    "cv": {
+      "title": "Hoja de vida",
+      "format": "PDF, español",
+      "download": "Descargar CV"
+    }
+  },
+  "experience": {
+    "title": "Experiencia",
+    "subtitle": "Experiencia laboral, de la más reciente a la más antigua.",
+    "present": "Actual",
+    "years": "{n} año | {n} años",
+    "months": "{n} mes | {n} meses",
+    "roles": {
+      "promovalle": "Desarrollador junior",
+      "colombianTi": "Desarrollador Java"
+    },
+    "monthNames": {
+      "1": "ene", "2": "feb", "3": "mar", "4": "abr", "5": "may", "6": "jun",
+      "7": "jul", "8": "ago", "9": "sep", "10": "oct", "11": "nov", "12": "dic"
+    }
+  },
+  "contact": {
+    "title": "Hablemos",
+    "subtitle": "¿Buscas un perfil full-stack o frontend? Escríbeme.",
+    "copy": "Copiar email",
+    "copied": "Copiado"
   }
 }

@@ -1,4 +1,7 @@
 <script setup lang="ts">
+
+import { profileLinks } from '../data/profile'
+
 const links = [
   { key: 'nav.about', href: '#about' },
   { key: 'nav.work', href: '#work' },
@@ -48,14 +51,14 @@ function toggleTheme() {
           El servidor no conoce el tema: los íconos se alternan por CSS para evitar un desajuste de hidratación.
           Van envueltos en <span> porque @nuxt/icon fija display en .iconify fuera de @layer y le gana a hidden.
         -->
-        <span class="flex dark:hidden"><Icon name="lucide:moon" class="size-[18px]" /></span>
-        <span class="hidden dark:flex"><Icon name="lucide:sun" class="size-[18px]" /></span>
+        <span class="flex dark:hidden"><Icon name="lucide:moon" class="text-[18px]" /></span>
+        <span class="hidden dark:flex"><Icon name="lucide:sun" class="text-[18px]" /></span>
       </IconButton>
-      <IconButton label="GitHub" href="https://github.com/davecoude">
-        <Icon name="lucide:github" class="size-[18px]" />
+      <IconButton label="GitHub" :href="profileLinks.github">
+        <Icon name="lucide:github" class="text-[18px]" />
       </IconButton>
-      <IconButton label="LinkedIn" href="https://www.linkedin.com/in/davanegas/">
-        <Icon name="lucide:linkedin" class="size-[18px]" />
+      <IconButton label="LinkedIn" :href="profileLinks.linkedin">
+        <Icon name="lucide:linkedin" class="text-[18px]" />
       </IconButton>
     </div>
   </header>

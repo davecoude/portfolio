@@ -7,5 +7,55 @@
     "contact": "Contact",
     "switchLocale": "Ver en español",
     "switchTheme": "Switch theme"
+  },
+  "hero": {
+    "photoAlt": "Photo of Diego Vanegas",
+    "role": "Full-stack developer",
+    "status": "Open to full-time roles",
+    "headline": "I build web applications end to end, from the database schema to the last button.",
+    "lede": "Vue on the front, Node.js and PostgreSQL behind it. Right now I'm learning generative AI: LLM APIs and RAG.",
+    "ctaProject": "View SeatMe",
+    "ctaCv": "Download CV"
+  },
+  "about": {
+    "title": "About",
+    "intro": "Hi, I'm Diego, a full-stack developer in Bogotá.",
+    "introMore": "I study software engineering and like code that stays easy to change after launch.",
+    "learning": {
+      "label": "Currently learning",
+      "title": "Generative AI",
+      "text": "Building with LLM APIs and retrieval-augmented generation (RAG)."
+    },
+    "studying": {
+      "label": "Currently studying",
+      "title": "B.S. Software Engineering",
+      "text": "Corporación Universitaria Iberoamericana, 2024–2027"
+    },
+    "cv": {
+      "title": "Curriculum vitae",
+      "format": "PDF, English",
+      "download": "Download CV"
+    }
+  },
+  "experience": {
+    "title": "Experience",
+    "subtitle": "Work experience, most recent first.",
+    "present": "Present",
+    "years": "{n} yr | {n} yrs",
+    "months": "{n} mo | {n} mos",
+    "roles": {
+      "promovalle": "Junior Developer",
+      "colombianTi": "Java Developer"
+    },
+    "monthNames": {
+      "1": "Jan", "2": "Feb", "3": "Mar", "4": "Apr", "5": "May", "6": "Jun",
+      "7": "Jul", "8": "Aug", "9": "Sep", "10": "Oct", "11": "Nov", "12": "Dec"
+    }
+  },
+  "contact": {
+    "title": "Let's talk",
+    "subtitle": "Hiring for a full-stack or frontend role? Write to me.",
+    "copy": "Copy email",
+    "copied": "Copied"
   }
 }
