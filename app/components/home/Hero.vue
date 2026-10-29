@@ -41,5 +41,6 @@
         {{ $t('hero.ctaCv') }}
       </AppButton>
     </div>
+    <HomeActivity />
   </section>
 </template>
