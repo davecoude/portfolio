@@ -16,5 +16,25 @@
     "lede": "Vue en el frontend, Node.js y PostgreSQL detrás. Hoy estoy aprendiendo IA generativa: APIs de LLM y RAG.",
     "ctaProject": "Ver SeatMe",
     "ctaCv": "Descargar CV"
+  },
+  "about": {
+    "title": "Sobre mí",
+    "intro": "Hola, soy Diego, desarrollador full-stack en Bogotá.",
+    "introMore": "Estudio ingeniería de software y me gusta el código que sigue siendo fácil de cambiar después del lanzamiento.",
+    "learning": {
+      "label": "Aprendiendo ahora",
+      "title": "IA generativa",
+      "text": "Construyendo con APIs de LLM y generación aumentada por recuperación (RAG)."
+    },
+    "studying": {
+      "label": "Estudiando ahora",
+      "title": "Ingeniería de Software",
+      "text": "Corporación Universitaria Iberoamericana, 2024–2027"
+    },
+    "cv": {
+      "title": "Hoja de vida",
+      "format": "PDF, español",
+      "download": "Descargar CV"
+    }
   }
 }

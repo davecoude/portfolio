@@ -1,7 +1,5 @@
 <script setup lang="ts">
-  const { locale } = useI18n()
-  // Un PDF por idioma en public/cv/
-  const cvHref = computed(() => `/cv/diego-vanegas-cv-${locale.value}.pdf`)
+    const cvHref = useCvHref()
 </script>
 
 <template>

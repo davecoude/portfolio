@@ -16,5 +16,25 @@
     "lede": "Vue on the front, Node.js and PostgreSQL behind it. Right now I'm learning generative AI: LLM APIs and RAG.",
     "ctaProject": "View SeatMe",
     "ctaCv": "Download CV"
+  },
+  "about": {
+    "title": "About",
+    "intro": "Hi, I'm Diego, a full-stack developer in Bogotá.",
+    "introMore": "I study software engineering and like code that stays easy to change after launch.",
+    "learning": {
+      "label": "Currently learning",
+      "title": "Generative AI",
+      "text": "Building with LLM APIs and retrieval-augmented generation (RAG)."
+    },
+    "studying": {
+      "label": "Currently studying",
+      "title": "B.S. Software Engineering",
+      "text": "Corporación Universitaria Iberoamericana, 2024–2027"
+    },
+    "cv": {
+      "title": "Curriculum vitae",
+      "format": "PDF, English",
+      "download": "Download CV"
+    }
   }
 }
