@@ -1,5 +1,6 @@
 <script setup lang="ts">
     const cvHref = useCvHref()
+    const { sectionHref, goToSection } = useSectionNav()
 </script>
 
 <template>
@@ -33,7 +34,7 @@
     </p>
 
     <div class="flex flex-wrap gap-2.5">
-      <AppButton href="#work">
+      <AppButton :href="sectionHref('work')" @click.prevent="goToSection('work')">
         {{ $t('hero.ctaProject') }}
       </AppButton>
       <AppButton :href="cvHref" variant="secondary" download>

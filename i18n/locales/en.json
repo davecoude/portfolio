@@ -60,5 +60,22 @@
   },
   "activity": {
     "label": "Latest push"
+  },
+  "work": {
+    "label": "Featured project",
+    "lastPush": "Last push {ago}",
+    "built": "What I built",
+    "stack": "Stack",
+    "caseStudy": "Read the full case study"
+  },
+  "project": {
+    "demo": "Open live demo",
+    "code": "View code",
+    "demoIn": "Demo in {language}",
+    "coverAlt": "Screens of {title}"
+  },
+  "languages": {
+    "en": "English",
+    "es": "Spanish"
   }
 }
