@@ -5,6 +5,7 @@ const API_URL = 'https://api.github.com'
 const RAW_URL = 'https://raw.githubusercontent.com'
 const PORTFOLIO_TOPIC = 'portfolio'
 const FEATURED_TOPIC = 'featured'
+const PORTFOLIO_DIR = '.portfolio'
 const MANIFEST_FILE = 'meta.json'
 const JSON_MEDIA_TYPE = 'application/vnd.github+json'
 const RAW_MEDIA_TYPE = 'application/vnd.github.raw+json'
@@ -65,7 +66,7 @@ export function createGitHubProjectSource(options: GitHubProjectSourceOptions): 
   }
 
   function portfolioPath(repo: GitHubRepo, file?: string): string {
-    return `/repos/${repo.full_name}/contents/.portfolio${file ? `/${file}` : ''}`
+    return `/repos/${repo.full_name}/contents/${PORTFOLIO_DIR}${file ? `/${file}` : ''}`
   }
 
   async function listPortfolioRepos(): Promise<GitHubRepo[]> {
@@ -163,7 +164,17 @@ export function createGitHubProjectSource(options: GitHubProjectSourceOptions): 
       if (!project.hasCaseStudy) return null
 
       const caseStudy = await readFile(repo, caseStudyFile(locale))
-      return caseStudy === null ? null : { ...project, caseStudy }
+      
+      if(caseStudy === null) return null
+
+      return {
+        ...project,
+        caseStudy,
+        caseStudyBase: {
+          assets: rawFileUrl(repo, `${PORTFOLIO_DIR}/`),
+          source: `${repo.html_url}/blob/${repo.default_branch}/${PORTFOLIO_DIR}/`,
+        }
+      }
     },
 
     async getLatestActivity(): Promise<Activity | null> {

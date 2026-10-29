@@ -164,6 +164,15 @@ describe('getProject', () => {
   it('devuelve null si el slug no existe', async () => {
     expect(await source(routes).getProject('no-existe', 'es')).toBeNull()
   })
+
+  it('incluye las URLs de la carpeta .portfolio/ para resolver imágenes y links relativos', async () => {
+    const project = await source(routes).getProject('seatme', 'es')
+
+    expect(project?.caseStudyBase).toEqual({
+      assets: 'https://raw.githubusercontent.com/davecoude/SeatMe/main/.portfolio/',
+      source: 'https://github.com/davecoude/SeatMe/blob/main/.portfolio/',
+    })
+  })
 })
 
 describe('getLatestActivity', () => {
