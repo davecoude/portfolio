@@ -57,5 +57,8 @@
     "subtitle": "¿Buscas un perfil full-stack o frontend? Escríbeme.",
     "copy": "Copiar email",
     "copied": "Copiado"
+  },
+  "activity": {
+    "label": "Último push"
   }
 }

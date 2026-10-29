@@ -57,5 +57,8 @@
     "subtitle": "Hiring for a full-stack or frontend role? Write to me.",
     "copy": "Copy email",
     "copied": "Copied"
+  },
+  "activity": {
+    "label": "Latest push"
   }
 }
