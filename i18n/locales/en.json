@@ -36,5 +36,20 @@
       "format": "PDF, English",
       "download": "Download CV"
     }
+  },
+  "experience": {
+    "title": "Experience",
+    "subtitle": "Work experience, most recent first.",
+    "present": "Present",
+    "years": "{n} yr | {n} yrs",
+    "months": "{n} mo | {n} mos",
+    "roles": {
+      "promovalle": "Junior Developer",
+      "colombianTi": "Java Developer"
+    },
+    "monthNames": {
+      "1": "Jan", "2": "Feb", "3": "Mar", "4": "Apr", "5": "May", "6": "Jun",
+      "7": "Jul", "8": "Aug", "9": "Sep", "10": "Oct", "11": "Nov", "12": "Dec"
+    }
   }
 }
