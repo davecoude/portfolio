@@ -1,6 +1,7 @@
 <script setup lang="ts">
   import { profileLinks } from '../../data/profile'
 
+  const [ emailUser, emailDomain ] = profileLinks.email.split('@')
   const { copied, copy } = useCopyToClipboard()
   const emailText = useTemplateRef<HTMLElement>('email')
 
@@ -26,7 +27,7 @@
 
     <div class="flex flex-wrap items-center justify-between gap-3 rounded-surface border border-line bg-surface py-3.5 pl-[18px] pr-3.5">
       <span ref="email" class="min-w-0 select-all text-[clamp(18px,2.4vw,22px)] tracking-tight [overflow-wrap:anywhere]">
-        {{ profileLinks.email }}
+        {{ emailUser }}<wbr>@{{ emailDomain }}
       </span>
       <AppButton :variant="copied ? 'success' : 'primary'" @click="copyEmail">
         <Icon :name="copied ? 'lucide:check' : 'lucide:copy'" class="text-[18px]" />
