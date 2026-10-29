@@ -1,4 +1,7 @@
 <script setup lang="ts">
+
+import { profileLinks } from '../data/profile'
+
 const links = [
   { key: 'nav.about', href: '#about' },
   { key: 'nav.work', href: '#work' },
@@ -51,10 +54,10 @@ function toggleTheme() {
         <span class="flex dark:hidden"><Icon name="lucide:moon" class="text-[18px]" /></span>
         <span class="hidden dark:flex"><Icon name="lucide:sun" class="text-[18px]" /></span>
       </IconButton>
-      <IconButton label="GitHub" href="https://github.com/davecoude">
+      <IconButton label="GitHub" :href="profileLinks.github">
         <Icon name="lucide:github" class="text-[18px]" />
       </IconButton>
-      <IconButton label="LinkedIn" href="https://www.linkedin.com/in/davanegas/">
+      <IconButton label="LinkedIn" :href="profileLinks.linkedin">
         <Icon name="lucide:linkedin" class="text-[18px]" />
       </IconButton>
     </div>

@@ -3,5 +3,6 @@
     <HomeHero />
     <HomeAbout />
     <HomeExperience />
+    <HomeContact />
   </div>
 </template>
