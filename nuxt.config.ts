@@ -33,6 +33,10 @@ export default defineNuxtConfig({
   runtimeConfig: {
     githubToken: '',
     githubOwner: 'davecoude',
+    public: {
+      // Vercel define VERCEL=1 en sus builds: Web Analytics solo se carga en los deployments de Vercel
+      vercelAnalytics: Boolean(process.env.VERCEL),
+    }
   },
   nitro: {
     // sanitize-html es CommonJS y hace require() de htmlparser2, que es solo ESM. El runtime de Vercel
