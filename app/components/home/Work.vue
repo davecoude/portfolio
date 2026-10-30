@@ -1,18 +1,39 @@
 <script setup lang="ts">
   const { locale } = useI18n()
   const localePath = useLocalePath()
+  // Fijo por instancia: cambiar de idioma es otra ruta (/ → /es) y Nuxt monta otra home.
+  // Reactivo, la home que sale cambiaría de idioma a mitad del fundido
+  const lang = locale.value
 
-  // En el servidor: el proyecto es el contenido principal y debe estar en el HTML (SEO, sin parpadeo).
-  // La URL es una función para que al cambiar de idioma se vuelva a pedir.
-  const { data: projects } = await useFetch(() => `/api/${locale.value}/projects`, {
+  // En el servidor: el proyecto es el contenido principal y debe estar en el HTML (SEO, sin parpadeo)
+  const { data: projects } = await useFetch(`/api/${lang}/projects`, {
+    key: projectsKey(lang),
+    getCachedData: reuseLoadedData,
     default: () => [],
   })
   const project = computed(() => projects.value.find(item => item.featured) ?? null)
 
+  // Precarga el caso de estudio en segundo plano: al abrirlo, la página cambia sin esperar a la red.
+  // Se guarda en el payload con la misma clave que usa su página (ver utils/projectData.ts)
+  const nuxtApp = useNuxtApp()
+  async function prefetchCaseStudy() {
+    const current = project.value
+    if (!current?.hasCaseStudy) return
+    const key = projectKey(lang, current.slug)
+    if (nuxtApp.payload.data[key]) return
+    try {
+      nuxtApp.payload.data[key] = await $fetch(`/api/${lang}/projects/${current.slug}`)
+    }
+    catch {
+      // Sin precarga no pasa nada: la página del caso de estudio lo pide al abrirse
+    }
+  }
+  onMounted(prefetchCaseStudy)
+
   // El mismo "ahora" en servidor y cliente: el texto relativo no cambia al hidratar
   const now = useState('render-now', () => Date.now())
   const pushedAgo = computed(() =>
-    project.value ? formatRelativeTime(new Date(project.value.pushedAt), locale.value, new Date(now.value)) : '',
+    project.value ? formatRelativeTime(new Date(project.value.pushedAt), lang, new Date(now.value)) : '',
   )
 </script>
 

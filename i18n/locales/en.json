@@ -77,5 +77,16 @@
   "languages": {
     "en": "English",
     "es": "Spanish"
+  },
+  "caseStudy": {
+    "label": "Case study",
+    "back": "Back to home"
+  },
+  "error": {
+    "notFoundTitle": "This page doesn't exist",
+    "notFoundText": "The link may be outdated, or the project isn't available in this language.",
+    "title": "Something went wrong",
+    "text": "The page couldn't load right now. Please try again in a few minutes.",
+    "home": "Back to home"
   }
 }

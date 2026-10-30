@@ -24,9 +24,10 @@ export function useSectionNav() {
       return
     }
 
-    // Desde otra página: Nuxt lleva la home arriba cuando termina de renderizar (page:finish + un frame).
-    // Se espera un frame más para hacer el scroll después de ese reset y no antes.
-    nuxtApp.hooks.hookOnce('page:finish', () => {
+    // Desde otra página: Nuxt lleva la home arriba cuando la página anterior termina de salir
+    // (page:transition:finish + un frame). Se espera un frame más para hacer el scroll después de ese
+    // reset, mientras la home todavía está entrando con el fundido: el salto no se ve.
+    nuxtApp.hooks.hookOnce('page:transition:finish', () => {
       requestAnimationFrame(() => requestAnimationFrame(() => scrollToSection(id, false)))
     })
     await navigateTo(home)

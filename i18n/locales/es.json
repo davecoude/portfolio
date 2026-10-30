@@ -77,5 +77,16 @@
   "languages": {
     "en": "inglés",
     "es": "español"
+  },
+  "caseStudy": {
+    "label": "Caso de estudio",
+    "back": "Volver al inicio"
+  },
+  "error": {
+    "notFoundTitle": "Esta página no existe",
+    "notFoundText": "Puede que el link esté desactualizado o que el proyecto no esté disponible en este idioma.",
+    "title": "Algo salió mal",
+    "text": "La página no se pudo cargar en este momento. Intenta de nuevo en unos minutos.",
+    "home": "Volver al inicio"
   }
 }
