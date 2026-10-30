@@ -44,9 +44,10 @@ function toggleTheme() {
     </nav>
 
     <div class="flex justify-self-end gap-2 [grid-area:icons]">
+      <!-- El nombre accesible empieza con el texto visible ("ES · Ver en español"): quien navega por voz dice lo que ve (WCAG 2.5.3) -->
       <IconButton
         :to="switchLocaleHref"
-        :label="$t('nav.switchLocale')"
+        :label="`${targetLocale.toUpperCase()} · ${$t('nav.switchLocale')}`"
         :lang="targetLocale"
         :hreflang="targetLocale"
       >

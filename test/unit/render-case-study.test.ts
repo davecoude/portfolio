@@ -12,7 +12,7 @@ describe('renderCaseStudy', () => {
     const html = render('## Contexto\n\nTexto con **negrita**.\n\n```\nroutes → service\n```')
     expect(html).toContain('<h2>Contexto</h2>')
     expect(html).toContain('<strong>negrita</strong>')
-    expect(html).toContain('<pre><code>routes → service')
+    expect(html).toContain('<pre tabindex="0"><code>routes → service')
   })
 
   it('resuelve las imágenes relativas a la URL raw del repo', () => {

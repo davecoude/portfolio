@@ -136,6 +136,7 @@
   font-size: 13px;
   line-height: 1.6;
 }
+.case-study :deep(pre:focus-visible) { outline: 2px solid var(--ink); outline-offset: 2px; }
 .case-study :deep(pre code) { padding: 0; border: 0; background: none; font-size: inherit; }
 .case-study :deep(img) {
   width: 100%;

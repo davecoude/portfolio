@@ -7,6 +7,10 @@
   const { t } = useI18n()
   const notFound = computed(() => props.error.statusCode === 404)
 
+  // error.vue reemplaza a app.vue: el lang del <html> se declara aquí también
+  const localeHead = useLocaleHead()
+  useHead(() => ({ htmlAttrs: { lang: localeHead.value.htmlAttrs.lang } }))
+
   // Las páginas de error no se indexan
   useSeoMeta({
     title: () => `${t(notFound.value ? 'error.notFoundTitle' : 'error.title')} · Diego Vanegas`,
