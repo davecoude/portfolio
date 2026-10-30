@@ -4,7 +4,15 @@
   const props = defineProps<{ error: NuxtError }>()
 
   const localePath = useLocalePath()
+  const { t } = useI18n()
   const notFound = computed(() => props.error.statusCode === 404)
+
+  // Las páginas de error no se indexan
+  useSeoMeta({
+    title: () => `${t(notFound.value ? 'error.notFoundTitle' : 'error.title')} · Diego Vanegas`,
+    robots: 'noindex',
+  })
+
 
   // Limpia el error y vuelve al inicio en el idioma actual
   function goHome() {

@@ -88,5 +88,12 @@
     "title": "Algo salió mal",
     "text": "La página no se pudo cargar en este momento. Intenta de nuevo en unos minutos.",
     "home": "Volver al inicio"
+  },
+  "seo": {
+    "home": {
+      "title": "Diego Vanegas · Desarrollador full-stack",
+      "description": "Desarrollador full-stack en Bogotá: aplicaciones web de punta a punta con Vue, Node.js y PostgreSQL. Proyecto destacado: SeatMe, reservas de escritorios."
+    },
+    "ogImageAlt": "Diego Vanegas, desarrollador full-stack: construyo aplicaciones web de punta a punta."
   }
 }

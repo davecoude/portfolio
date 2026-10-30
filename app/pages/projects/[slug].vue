@@ -1,6 +1,6 @@
 <script setup lang="ts">
   const route = useRoute('projects-slug')
-  const { locale } = useI18n()
+  const { locale, t } = useI18n()
   const { sectionHref, goToSection } = useSectionNav()
 
   // Valores fijos de esta instancia: cada idioma y cada slug es otra ruta, y Nuxt monta otra página.
@@ -25,7 +25,15 @@
     })
   }
 
-  useHead({ title: () => (project.value ? `${project.value.title} · Diego Vanegas` : 'Diego Vanegas') })
+  // Metadatos propios: al compartir el link del caso de estudio se ve su título y su resumen
+  const title = `${project.value.title} · ${t('caseStudy.label')} · Diego Vanegas`
+  useSeoMeta({
+    title,
+    description: project.value.summary,
+    ogTitle: title,
+    ogDescription: project.value.summary,
+    ogType: 'article',
+  })
 </script>
 
 <template>

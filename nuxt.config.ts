@@ -1,5 +1,11 @@
 import tailwindcss from "@tailwindcss/vite";
 
+// URL pública del sitio: canonical, hreflang, og:url, og:image y el sitemap la necesitan absoluta.
+// En Vercel sale del dominio de producción del proyecto (variable de sistema, disponible en el build),
+// así los previews también apuntan a producción. NUXT_PUBLIC_I18N_BASE_URL la sobreescribe en runtime.
+const productionHost = process.env.VERCEL_PROJECT_PRODUCTION_URL
+const siteUrl = productionHost ? `https://${productionHost}` : 'http://localhost:3000'
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   modules: ['@nuxt/fonts', '@nuxt/icon/module', '@nuxt/eslint', '@nuxt/test-utils/module', '@nuxtjs/i18n', '@nuxtjs/color-mode'],
@@ -35,6 +41,7 @@ export default defineNuxtConfig({
   },
   routeRules: {
     '/api/**': { isr: 3600 },
+    '/sitemap.xml': { isr: 3600 },
   },
   colorMode: {
     classSuffix: '',
@@ -43,6 +50,7 @@ export default defineNuxtConfig({
     storageKey: 'color-mode',
   },
   i18n: {
+    baseUrl: siteUrl,
     strategy: 'prefix_except_default',
     defaultLocale: 'en',
     locales: [
