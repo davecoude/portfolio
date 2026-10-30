@@ -13,7 +13,6 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   css: ['~/assets/css/main.css'],
   app: {
-    head: { link: [{ rel: 'icon', type: 'image/x-icon', href: '/apple-touch-icon.png' }]},
     // Fundido entre páginas; out-in: la nueva entra cuando la anterior ya salió (estilos en main.css)
     pageTransition: { name: 'page', mode: 'out-in' },
   },
