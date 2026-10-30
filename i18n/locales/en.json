@@ -88,5 +88,12 @@
     "title": "Something went wrong",
     "text": "The page couldn't load right now. Please try again in a few minutes.",
     "home": "Back to home"
+  },
+  "seo": {
+    "home": {
+      "title": "Diego Vanegas · Full-stack developer",
+      "description": "Full-stack developer in Bogotá building web apps end to end with Vue, Node.js and PostgreSQL. Featured project: SeatMe, a desk booking platform."
+    },
+    "ogImageAlt": "Diego Vanegas, full-stack developer: I build web applications end to end."
   }
 }
