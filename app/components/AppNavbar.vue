@@ -3,15 +3,20 @@
 import { profileLinks } from '../data/profile'
 
 const links = [
-  { key: 'nav.about', href: '#about' },
-  { key: 'nav.work', href: '#work' },
-  { key: 'nav.experience', href: '#experience' },
-  { key: 'nav.contact', href: '#contact' },
+  { key: 'nav.about', id: 'about' },
+  { key: 'nav.work', id: 'work' },
+  { key: 'nav.experience', id: 'experience' },
+  { key: 'nav.contact', id: 'contact' },
 ] as const
+
+// Llevan a las secciones de la home sin dejar el #hash en la URL (también desde el caso de estudio)
+const { sectionHref, goToSection } = useSectionNav()
 
 const { locale } = useI18n()
 const switchLocalePath = useSwitchLocalePath()
 const targetLocale = computed(() => (locale.value === 'en' ? 'es' : 'en'))
+// Sin el #hash: el servidor nunca lo recibe, y con él el link no coincidiría al hidratar
+const switchLocaleHref = computed(() => switchLocalePath(targetLocale.value).split('#')[0])
 const colorMode = useColorMode()
 
 function toggleTheme() {
@@ -29,9 +34,10 @@ function toggleTheme() {
     <nav :aria-label="$t('nav.label')" class="flex justify-between gap-1 text-[15px] font-medium [grid-area:nav] nav:justify-center">
       <a
         v-for="link in links"
-        :key="link.href"
-        :href="link.href"
+        :key="link.id"
+        :href="sectionHref(link.id)"
         class="whitespace-nowrap rounded-ctl py-2 transition-colors hover:text-ink-2 nav:px-1.5"
+        @click.prevent="goToSection(link.id)"
       >
         {{ $t(link.key) }}
       </a>
@@ -39,7 +45,7 @@ function toggleTheme() {
 
     <div class="flex justify-self-end gap-2 [grid-area:icons]">
       <IconButton
-        :to="switchLocalePath(targetLocale)"
+        :to="switchLocaleHref"
         :label="$t('nav.switchLocale')"
         :lang="targetLocale"
         :hreflang="targetLocale"

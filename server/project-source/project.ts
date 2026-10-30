@@ -30,6 +30,10 @@ export interface Project {
 
 export interface ProjectDetail extends Project {
   caseStudy: string
+  caseStudyBase: {
+    assets: string
+    source: string
+  }
 }
 
 export interface Activity {

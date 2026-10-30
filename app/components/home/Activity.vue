@@ -1,8 +1,13 @@
 <script setup lang="ts">
   const { locale } = useI18n()
 
-  // Solo en el cliente: la página no espera a GitHub y la respuesta sale de la caché ISR de /api/activity
-  const { data: activity, status } = useFetch('/api/activity', { server: false })
+  // Solo en el cliente: la página no espera a GitHub y la respuesta sale de la caché ISR de /api/activity.
+  // Al volver a la home se reutiliza la respuesta ya cargada: la tira aparece sin el placeholder
+  const { data: activity, status } = useFetch('/api/activity', {
+    key: 'activity',
+    server: false,
+    getCachedData: reuseLoadedData,
+  })
 
   const pushedAgo = computed(() =>
     activity.value ? formatRelativeTime(new Date(activity.value.pushedAt), locale.value) : '',

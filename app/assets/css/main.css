@@ -73,3 +73,20 @@
     @apply bg-page text-ink font-sans antialiased;
   }
 }
+
+/* Transición entre páginas (app.pageTransition en nuxt.config.ts).
+   Solo opacidad: un transform desplazaría la sección justo cuando se hace scroll hacia ella */
+.page-enter-active,
+.page-leave-active {
+  transition: opacity 160ms ease;
+}
+.page-enter-from,
+.page-leave-to {
+  opacity: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .page-enter-active,
+  .page-leave-active {
+    transition: none;
+  }
+}

@@ -1,13 +1,15 @@
 <script setup lang="ts">
   withDefaults(defineProps<{
-    /** Sin href se renderiza un <button> */
+    /** Link a otro sitio o archivo; sin href ni to se renderiza un <button> */
     href?: string
+    /** Ruta interna: navega con NuxtLink, sin recargar la página */
+    to?: string
     variant?: 'primary' | 'secondary' | 'success'
     /** Descarga el archivo en lugar de abrirlo */
     download?: boolean
     /** Link a otro sitio: se abre en otra pestaña */
     external?: boolean
-  }>(), { href: undefined, variant: 'primary', download: false, external: false })
+  }>(), { href: undefined, to: undefined, variant: 'primary', download: false, external: false })
 
   const base = 'inline-flex h-11 items-center justify-center gap-2 whitespace-nowrap rounded-ctl px-[18px] font-medium transition motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink'
 
@@ -30,6 +32,9 @@
   >
     <slot />
   </a>
+  <NuxtLink v-else-if="to" :to="to" :class="[base, variants[variant]]">
+    <slot />
+  </NuxtLink>
   <button v-else type="button" :class="[base, variants[variant]]">
     <slot />
   </button>

@@ -6,6 +6,10 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
   css: ['~/assets/css/main.css'],
+  app: {
+    // Fundido entre páginas; out-in: la nueva entra cuando la anterior ya salió (estilos en main.css)
+    pageTransition: { name: 'page', mode: 'out-in' },
+  },
   vite: {
     plugins: [tailwindcss()]
   },
@@ -23,6 +27,11 @@ export default defineNuxtConfig({
   runtimeConfig: {
     githubToken: '',
     githubOwner: 'davecoude',
+  },
+  nitro: {
+    // sanitize-html es CommonJS y hace require() de htmlparser2, que es solo ESM. El runtime de Vercel
+    // no permite require() de ESM (ERR_REQUIRE_ESM): se empaqueta en el bundle y el bundler lo resuelve en el build
+    externals: { inline: ['sanitize-html'] },
   },
   routeRules: {
     '/api/**': { isr: 3600 },
