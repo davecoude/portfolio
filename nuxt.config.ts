@@ -41,6 +41,7 @@ export default defineNuxtConfig({
   },
   routeRules: {
     '/api/**': { isr: 3600 },
+    '/sitemap.xml': { isr: 3600 },
   },
   colorMode: {
     classSuffix: '',
