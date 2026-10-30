@@ -36,6 +36,7 @@ export function renderCaseStudy(markdown: string, base: CaseStudyBase): string {
       a: ['href', 'title', 'target', 'rel'],
       img: ['src', 'alt', 'title', 'loading', 'decoding'],
       code: ['class'],
+      pre: ['tabindex'],
     },
     allowedSchemes: ['https', 'mailto'],
     allowedSchemesByTag: { img: ['https'] },
@@ -53,6 +54,12 @@ export function renderCaseStudy(markdown: string, base: CaseStudyBase): string {
           },
         }
       },
+      pre: (tagName, attribs) => ({
+        tagName,
+        attribs: {
+          ...attribs, tabindex: '0'
+        }
+      }),
       img: (tagName, attribs) => {
         const src = resolveUrl(attribs.src, base.assets)
         return {
